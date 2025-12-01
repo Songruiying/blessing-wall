@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="no-referrer">
+    <title>扫码签到 - 祝福墙</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .form-container {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .char-count {
+            text-align: right;
+            margin-top: 5px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .success-message.hidden {
+            display: none;
+        }
+
+        .message-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            animation: scaleIn 0.3s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            animation: checkmarkPop 0.5s ease-out;
+        }
+
+        @keyframes checkmarkPop {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .message-content h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .message-content p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* 响应式设计 - 移动端和微信优化 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                max-width: 100%;
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 16px; /* 防止iOS自动缩放 */
+            }
+            
+            .submit-btn {
+                font-size: 18px;
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 扫码签到</h1>
+            <p class="subtitle">留下您的祝福，参与幸运抽奖</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" id="name" placeholder="请输入您的姓名" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="group">身份</label>
+                <select id="group" required>
+                    <option value="">请选择身份</option>
+                    <option value="student">学生组</option>
+                    <option value="teacher">老师组</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="blessing">祝福语</label>
+                <textarea id="blessing" placeholder="请输入您对学院、老师或同学的祝福..." rows="4" maxlength="100" required></textarea>
+                <div class="char-count"><span id="charCount">0</span>/100</div>
+            </div>
+            
+            <button id="submitBtn" class="submit-btn">提交祝福</button>
+        </div>
+        
+        <div id="successMessage" class="success-message hidden">
+            <div class="message-content">
+                <div class="checkmark">✓</div>
+                <h2>祝福已提交！</h2>
+                <p>您的祝福已加入祝福墙，祝您好运！</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 数据存储（实际项目中应使用后端API）
+        let blessings = JSON.parse(localStorage.getItem('blessings') || '[]');
+
+        // DOM元素
+        const nameInput = document.getElementById('name');
+        const groupSelect = document.getElementById('group');
+        const blessingTextarea = document.getElementById('blessing');
+        const charCount = document.getElementById('charCount');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        // 字符计数
+        blessingTextarea.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            if (count > 80) {
+                charCount.style.color = '#ff6b6b';
+            } else {
+                charCount.style.color = '#999';
+            }
+        });
+
+        // 提交祝福
+        submitBtn.addEventListener('click', function() {
+            const name = nameInput.value.trim();
+            const group = groupSelect.value;
+            const blessing = blessingTextarea.value.trim();
+            
+            // 验证
+            if (!name || !group || !blessing) {
+                alert('请填写完整信息！');
+                return;
+            }
+            
+            if (blessing.length < 5) {
+                alert('祝福语至少需要5个字符！');
+                return;
+            }
+            
+            // 禁用按钮
+            submitBtn.disabled = true;
+            submitBtn.textContent = '提交中...';
+            
+            // 创建祝福对象
+            const blessingObj = {
+                id: Date.now() + Math.random(),
+                name: name,
+                group: group,
+                blessing: blessing,
+                timestamp: new Date().toISOString()
+            };
+            
+            // 保存到本地存储
+            blessings.push(blessingObj);
+            localStorage.setItem('blessings', JSON.stringify(blessings));
+            
+            // 显示成功消息
+            setTimeout(() => {
+                successMessage.classList.remove('hidden');
+                
+                // 3秒后自动关闭并重置表单
+                setTimeout(() => {
+                    successMessage.classList.add('hidden');
+                    nameInput.value = '';
+                    groupSelect.value = '';
+                    blessingTextarea.value = '';
+                    charCount.textContent = '0';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '提交祝福';
+                }, 3000);
+            }, 500);
+        });
+
+        // 点击背景关闭成功消息
+        successMessage.addEventListener('click', function(e) {
+            if (e.target === successMessage) {
+                successMessage.classList.add('hidden');
+            }
+        });
+
+        // 错误处理和调试
+        window.addEventListener('error', function(e) {
+            console.error('页面加载错误:', e.message, e.filename, e.lineno);
+        });
+        
+        // 页面加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('页面加载完成');
+        });
+    </script>
+</body>
+</html>

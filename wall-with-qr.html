@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫码签到 + 祝福墙</title>
+    <link rel="stylesheet" href="wall-with-qr.css">
+</head>
+<body>
+    <div class="screen-layout">
+        <!-- 左侧：二维码 + 签到表单区域 -->
+        <div class="left-panel">
+            <div class="qr-header">
+                <h1>📱 扫码签到</h1>
+                <p>用手机扫描二维码进入签到页面</p>
+            </div>
+            
+            <!-- 二维码卡片 -->
+            <div class="qr-card">
+                <div id="qrcode" class="qr-image"></div>
+            </div>
+
+            <!-- 抽奖按钮 -->
+            <div class="lottery-btn-container">
+                <a href="lottery.html" class="lottery-btn" target="_blank">
+                    🎁 进入抽奖页面
+                </a>
+            </div>
+        </div>
+
+        <!-- 右侧：祝福墙 -->
+        <div class="right-panel">
+            <div class="header">
+                <h1>💌 祝福墙</h1>
+                <div class="stats">
+                    <span>总祝福数: <strong id="totalCount">0</strong></span>
+                    <span>学生组: <strong id="studentCount">0</strong></span>
+                    <span>老师组: <strong id="teacherCount">0</strong></span>
+                    <button id="clearBtn" class="clear-btn" title="清空所有祝福">🗑️ 清空</button>
+                </div>
+            </div>
+            <div id="wall" class="wall">
+                <!-- 提示文字将通过JS动态创建多条 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="wall-with-qr.js"></script>
+</body>
+</html>
+
+

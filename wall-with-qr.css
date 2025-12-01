@@ -1,0 +1,338 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.screen-layout {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 28% 72%;
+    color: #fff;
+}
+
+.left-panel {
+    padding: 30px 20px;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.qr-header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.qr-header p {
+    font-size: 16px;
+    color: #d0d7ff;
+}
+
+.qr-card {
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 18px;
+    padding: 20px 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.qr-image {
+    background: #fff;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.qr-image img {
+    display: block;
+    max-width: 260px;
+    height: auto;
+}
+
+.qr-url {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 12px;
+    word-break: break-all;
+}
+
+.qr-tips {
+    width: 100%;
+    font-size: 13px;
+    color: #e0e7ff;
+}
+
+.qr-tips ul {
+    margin-left: 18px;
+    margin-top: 6px;
+}
+
+.qr-tips li {
+    margin-bottom: 4px;
+}
+
+/* 抽奖按钮样式 */
+.lottery-btn-container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.lottery-btn {
+    display: block;
+    width: 100%;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.lottery-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
+}
+
+.lottery-btn:active {
+    transform: translateY(-1px);
+}
+
+.right-panel {
+    position: relative;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 18px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.header h1 {
+    font-size: 34px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.stats {
+    display: flex;
+    gap: 22px;
+    font-size: 16px;
+}
+
+.stats strong {
+    color: #ffd700;
+    font-size: 22px;
+}
+
+.clear-btn {
+    background: rgba(255, 77, 77, 0.8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.clear-btn:hover {
+    background: rgba(255, 77, 77, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 77, 77, 0.4);
+}
+
+.clear-btn:active {
+    transform: translateY(0);
+}
+
+.wall {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-top: 90px;
+}
+
+/* 飘动提示文字 - 从右到左循环飘过 */
+.floating-tip {
+    position: absolute;
+    left: 100%;
+    transform: translateY(-50%);
+    font-size: 36px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    z-index: 1;
+    animation: floatTipAcross 12s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes floatTipAcross {
+    0% {
+        opacity: 0;
+        transform: translateY(-50%) translateX(0);
+    }
+    5% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50%) translateX(calc(-100vw - 100%));
+    }
+}
+
+/* 复用原祝福信封样式 */
+.envelope {
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    cursor: pointer;
+    transform-origin: center;
+    animation: flyAcross 12s linear forwards;
+}
+
+@keyframes flyAcross {
+    0% {
+        opacity: 0;
+        transform: translateX(0) translateY(0);
+    }
+    3% {
+        opacity: 1;
+    }
+    97% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(calc(-100vw - 200px)) translateY(0);
+    }
+}
+
+.envelope:hover {
+    transform: scale(1.08) !important;
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+.envelope-body {
+    min-width: 170px;
+    max-width: 210px;
+    min-height: 80px;
+    max-height: 110px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 18px;
+    overflow: hidden;
+}
+
+.envelope-flap {
+    display: none;
+}
+
+/* 对话框小尾巴 */
+.envelope-body::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 40px;
+    border-width: 10px 10px 0 10px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.12) transparent transparent transparent;
+}
+
+.envelope-content {
+    color: white;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+}
+
+.envelope-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.envelope-blessing {
+    font-size: 12px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.envelope-group {
+    display: none;
+}
+
+.envelope.student .envelope-body {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.envelope.student .envelope-flap {
+    background: linear-gradient(135deg, #6bb6ff 0%, #4facfe 100%);
+}
+
+.envelope.teacher .envelope-body {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.envelope.teacher .envelope-flap {
+    background: linear-gradient(135deg, #ff8fa3 0%, #fa709a 100%);
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.envelope.new {
+    animation: flyAcross 12s linear forwards, twinkle 2s ease-in-out 3;
+}
+

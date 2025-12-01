@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幸运抽奖</title>
+    <link rel="stylesheet" href="lottery.css">
+</head>
+<body>
+    <div class="lottery-container">
+        <div class="header">
+            <h1>🎁 幸运抽奖</h1>
+            <p class="subtitle">随机抽取祝福，幸运观众即将揭晓</p>
+        </div>
+        
+        <div class="controls">
+            <div class="group-selector">
+                <button class="group-btn active" data-group="student">学生组抽奖</button>
+                <button class="group-btn" data-group="teacher">老师组抽奖</button>
+            </div>
+            <button id="drawBtn" class="draw-btn">开始抽奖</button>
+        </div>
+        
+        <div id="result" class="result hidden">
+            <div class="result-content">
+                <div class="confetti"></div>
+                <div class="winner-label">🎉 幸运观众 🎉</div>
+                <div class="winner-name" id="winnerName"></div>
+                <div class="winner-blessing">
+                    <div class="blessing-label">祝福语：</div>
+                    <div class="blessing-text" id="winnerBlessing"></div>
+                </div>
+                <div class="winner-group" id="winnerGroup"></div>
+            </div>
+        </div>
+        
+        <div id="drawing" class="drawing hidden">
+            <div class="spinner"></div>
+            <div class="drawing-text">正在抽取中...</div>
+        </div>
+    </div>
+    
+    <script src="lottery.js"></script>
+</body>
+</html>
+
