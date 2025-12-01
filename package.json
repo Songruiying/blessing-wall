@@ -1,0 +1,18 @@
+{
+  "name": "blessing-wall-checkin",
+  "version": "1.0.0",
+  "description": "祝福墙签到抽奖系统",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "checkin",
+    "blessing",
+    "lottery"
+  ],
+  "author": "",
+  "license": "MIT"
+}
+

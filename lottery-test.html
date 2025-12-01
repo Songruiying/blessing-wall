@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽奖效果测试</title>
+    <link rel="stylesheet" href="lottery.css">
+</head>
+<body>
+    <div class="lottery-container">
+        <div class="header">
+            <h1>🎁 幸运抽奖 - 效果测试</h1>
+            <p class="subtitle">这是抽奖完成后的显示效果</p>
+        </div>
+        
+        <div id="result" class="result">
+            <div class="result-content">
+                <div class="confetti"></div>
+                <div class="winner-label">🎉 幸运观众 🎉</div>
+                <div class="winner-name" id="winnerName">张三</div>
+                <div class="winner-blessing">
+                    <div class="blessing-label">祝福语：</div>
+                    <div class="blessing-text" id="winnerBlessing">祝分院蒸蒸日上，同学们前程似锦，未来可期！愿大家都能实现自己的梦想，创造美好的未来！</div>
+                </div>
+                <div class="winner-group" id="winnerGroup">学生组</div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="location.reload()" class="draw-btn" style="margin-right: 10px;">刷新效果</button>
+            <button onclick="window.location.href='lottery.html'" class="draw-btn">返回抽奖页面</button>
+        </div>
+    </div>
+    
+    <script src="lottery.js"></script>
+    <script>
+        // 页面加载时自动创建彩纸效果
+        document.addEventListener('DOMContentLoaded', function() {
+            createConfetti();
+            
+            // 每3秒重新创建一次彩纸效果
+            setInterval(createConfetti, 3000);
+        });
+    </script>
+</body>
+</html>
+
